@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TradeApp</string>
+    <string name="request">Request</string>
+    <string name="available">Available</string>
+    <string name="messeges">Messeges</string>
+    <string name="logout">Logout</string>
 </resources>

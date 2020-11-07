@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ForgetPassword"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".ItemListPageAfterLoginUser"></activity>
+        <activity
+            android:name=".ForgetPassword"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".EnteringOTP"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
