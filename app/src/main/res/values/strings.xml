@@ -4,4 +4,6 @@
     <string name="available">Available</string>
     <string name="messeges">Messeges</string>
     <string name="logout">Logout</string>
+    <string name="open" />
+    <string name="close" />
 </resources>
