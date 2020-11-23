@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "318395120570",
+    "firebase_url": "https://tradeapp-b08d9.firebaseio.com",
+    "project_id": "tradeapp-b08d9",
+    "storage_bucket": "tradeapp-b08d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318395120570:android:c9588398d0cab5188d3b83",
+        "android_client_info": {
+          "package_name": "munik.androidprojects.tradeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "318395120570-1srvh08ioabq5s3s2m8114ppcvm4hbfv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXI8Gt__wBgX7FP9vyPMP1B74WEGMF-Fw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "318395120570-1srvh08ioabq5s3s2m8114ppcvm4hbfv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
