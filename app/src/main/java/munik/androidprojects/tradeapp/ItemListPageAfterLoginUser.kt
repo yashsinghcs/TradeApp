@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_item_list_page_after_login_user.*
 
 class ItemListPageAfterLoginUser : AppCompatActivity() {
@@ -93,7 +94,11 @@ class ItemListPageAfterLoginUser : AppCompatActivity() {
                     searchView.setVisibility(View.GONE)
                     recyclerView.setVisibility(View.GONE)
                 }
-
+               R.id.logout ->{
+                   FirebaseAuth.getInstance().signOut();
+                   startActivity(Intent(this,LoginPage::class.java))
+                   finish()
+               }
             }
             true
         }

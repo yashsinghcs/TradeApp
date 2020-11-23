@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import java.nio.charset.MalformedInputException
 
 class LoginPage : AppCompatActivity() {
     private lateinit var signup_button_LoginPage:TextView
@@ -28,6 +29,11 @@ class LoginPage : AppCompatActivity() {
         username=findViewById(R.id.username)
         password=findViewById(R.id.password)
         Auth=FirebaseAuth.getInstance()
+        //FirebaseAuth.getInstance().signOut();
+       /* if (Auth!!.currentUser != null) {
+            startActivity(Intent(applicationContext, LoginPage::class.java))
+            finish()
+        }*/
         signup_button_LoginPage.setOnClickListener {
             startActivity(Intent(this,SignupPage::class.java))
         }
