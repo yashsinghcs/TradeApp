@@ -1,13 +1,13 @@
 package munik.androidprojects.tradeapp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import java.nio.charset.MalformedInputException
 
@@ -88,6 +88,10 @@ class SignupPage : AppCompatActivity() {
         userdetails["phoneNo"] = phoneNo.text.toString()
         userdetails["email"] = e_mail.text.toString()
         userdetails["username"] = email.text.toString()
+
+        //Toast.makeText(Signup_student.this, "user created", Toast.LENGTH_SHORT).show();
+        //putting other data like name ,email etc into the fire base collection name users
+
         db.collection("userdetails")
             .add(userdetails)
             .addOnSuccessListener { documentReference ->

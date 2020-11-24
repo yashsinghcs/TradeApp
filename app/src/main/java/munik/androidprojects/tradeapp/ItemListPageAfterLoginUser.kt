@@ -3,6 +3,7 @@ package munik.androidprojects.tradeapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
@@ -25,6 +26,7 @@ class ItemListPageAfterLoginUser : AppCompatActivity() {
     lateinit var available: Available
     lateinit var request: Request
     lateinit var messeges: Messeges
+    private lateinit var adapter :customeAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_list_page_after_login_user)
@@ -42,7 +44,7 @@ class ItemListPageAfterLoginUser : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val user = ArrayList<dataModel>()
-        user . add(dataModel("balaram"))
+       /* user . add(dataModel("balaram"))
         user . add(dataModel("ishita"))
         user . add(dataModel("goggo"))
         user . add(dataModel("billi"))
@@ -51,9 +53,25 @@ class ItemListPageAfterLoginUser : AppCompatActivity() {
         user . add(dataModel("dubeyji"))
         user . add(dataModel("himanshu"))
         user . add(dataModel("willy"))
-        user . add(dataModel("ballu"))
-        val adapter = customeAdapter(user)
-        recyclerView.adapter = adapter
+        user . add(dataModel("ballu"))*/
+
+       // recyclerView.adapter = adapter
+        db.collection("items").get().addOnSuccessListener { documents ->
+            for (document in documents) {
+                val a = document.data.get("name_of_item") as String
+                val b = document.data.get("price") as String + "/-"
+                val c = document.data.get("quantity") as String + "m"
+
+                //val k = a.toString().substring(10,a.toString().length-1)
+                Log.d("info", "get failed with =" + document.data.toString())
+                user.add(dataModel(a,b ,c ))
+            }
+             adapter = customeAdapter(user)
+            recyclerView.adapter = adapter
+        }.addOnFailureListener { exception ->
+            Log.d("info", "get failed with ", exception)
+
+        }
 
 
         searchView.setOnQueryTextListener( object : SearchView.OnQueryTextListener{

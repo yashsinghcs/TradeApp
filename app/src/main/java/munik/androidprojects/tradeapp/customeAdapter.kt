@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
@@ -30,9 +31,16 @@ var arrayListFilter = ArrayList<dataModel>()
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
         val user : dataModel = arrayListFilter[position]
         holder.textViewName?.text = user.header
+        holder.textViewPrice?.text = user.header1
+        holder.textViewLength?.text = user.header2
+        holder.image.setImageResource(R.drawable.ic_baseline_available)
     }
     class viewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val textViewName = itemView.findViewById(R.id.description)as TextView
+        val textViewPrice = itemView.findViewById(R.id.description1)as TextView
+        val textViewLength = itemView.findViewById(R.id.description2)as TextView
+        val image = itemView.findViewById(R.id.image) as ImageView
+
     }
 
     override fun getFilter(): Filter {
