@@ -39,7 +39,7 @@ class LoginPage : AppCompatActivity() {
         }
 
         forgetpassword.setOnClickListener {
-            startActivity( Intent(this,ForgetPassword::class.java))
+            startActivity( Intent(this,LoginPage::class.java))
         }
 
         loginbutton.setOnClickListener {
