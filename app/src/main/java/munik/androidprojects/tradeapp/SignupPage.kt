@@ -26,7 +26,7 @@ class SignupPage : AppCompatActivity() {
         setContentView(R.layout.activity_signup_page)
 
         //initializing the View class object
-        loginButton_SignupPage = findViewById(R.id.verify_button_OTP)
+        loginButton_SignupPage = findViewById(R.id.sighupverify_button_OTP)
         email = findViewById(R.id.username_signUp)
         password = findViewById(R.id.password_signUp)
         re_enter_password = findViewById(R.id.reEnterPassword_signUp)

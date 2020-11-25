@@ -60,7 +60,7 @@
         app:lineColor="#e100ff" />
 
     <Button
-        android:id="@+id/verify_button_OTP"
+        android:id="@+id/sighupverify_button_OTP"
         android:layout_width="298dp"
         android:layout_height="51dp"
         android:background="#e100ff"
