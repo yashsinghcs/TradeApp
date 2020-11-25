@@ -22,6 +22,7 @@ class ForgetPassword : AppCompatActivity() {
         mobileno=findViewById(R.id.Phoneno_forgetpassword)
         email=findViewById(R.id.Email_forgetpassword)
         restbutton=findViewById(R.id.forgotPassword_button_OTP)
+        auth = FirebaseAuth.getInstance()
         restbutton.setOnClickListener{
             reset()
         }
