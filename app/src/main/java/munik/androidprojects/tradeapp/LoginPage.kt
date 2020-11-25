@@ -50,6 +50,17 @@ class LoginPage : AppCompatActivity() {
     }
 
     private fun doLogin(){
+          fun updateUI(currentuser:FirebaseUser?){
+            if(currentuser!=null){
+                Toast.makeText(baseContext,"Login sucsessful", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this,ItemListPageAfterLoginUser::class.java))
+                finish()
+            }
+            else{
+                Toast.makeText(baseContext,"Login Failed", Toast.LENGTH_SHORT).show()
+            }
+
+        }
         if (username.text.toString().isEmpty()) {
             username.error = "please enter username"
             username.requestFocus()
@@ -74,23 +85,14 @@ class LoginPage : AppCompatActivity() {
             }
         }
     }
-
-    private  fun updateUI(currentuser:FirebaseUser?){
-        if(currentuser!=null){
+    public override fun onStart() {
+        super.onStart()
+        val user:FirebaseUser?=Auth.currentUser
+        if(user!=null){
             Toast.makeText(baseContext,"Login sucsessful", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this,ItemListPageAfterLoginUser::class.java))
             finish()
         }
-        else{
-            Toast.makeText(baseContext,"Login Failed", Toast.LENGTH_SHORT).show()
-        }
-
-    }
-
-    public override fun onStart() {
-        super.onStart()
-        val user:FirebaseUser?=Auth.currentUser
-        updateUI(user)
 
     }
 }
