@@ -92,13 +92,26 @@ class SignupPage : AppCompatActivity() {
         //Toast.makeText(Signup_student.this, "user created", Toast.LENGTH_SHORT).show();
         //putting other data like name ,email etc into the fire base collection name users
 
-        db.collection("userdetails")
+        //Toast.makeText(Signup_student.this, "user created", Toast.LENGTH_SHORT).show();
+        //putting other data like name ,email etc into the fire base collection name users
+       val userId_techer = auth.getCurrentUser()?.getUid()
+        val documentReference: DocumentReference =
+            db.collection("STUDENT").document(userId_techer as String)
+        documentReference.set(userdetails)
+            .addOnSuccessListener { // Log.i("info", "on success:user  profile is created" + userId_techer);
+                //. Log.i("info","on success:user  profile is created"+userId);
+                Toast.makeText(baseContext,"added succsesfully", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(baseContext,"not added due to some reason please try again", Toast.LENGTH_SHORT).show()
+            }
+        /*db.collection("userdetails")
             .add(userdetails)
             .addOnSuccessListener { documentReference ->
                 Toast.makeText(baseContext,"added succsesfully", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
                 Toast.makeText(baseContext,"not added due to some reason please try again", Toast.LENGTH_SHORT).show()
-            }
+            }*/
     }
 }

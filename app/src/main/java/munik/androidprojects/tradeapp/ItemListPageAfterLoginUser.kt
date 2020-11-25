@@ -1,20 +1,21 @@
 package munik.androidprojects.tradeapp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_item_list_page_after_login_user.*
+import com.google.firebase.auth.FirebaseUser
 
 class ItemListPageAfterLoginUser : AppCompatActivity() {
 
@@ -27,6 +28,9 @@ class ItemListPageAfterLoginUser : AppCompatActivity() {
     lateinit var request: Request
     lateinit var messeges: Messeges
     private lateinit var adapter :customeAdapter
+    private lateinit var headText : TextView
+    private lateinit var user : FirebaseUser
+    private lateinit var fAuth : FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_list_page_after_login_user)
@@ -36,6 +40,12 @@ class ItemListPageAfterLoginUser : AppCompatActivity() {
         searchView = findViewById(R.id.searchView) as SearchView
         drawerlayout = findViewById(R.id.drawerlayout_ItemListPageAfterLoginUser)
         navView = findViewById(R.id.navView)
+
+        fAuth = FirebaseAuth.getInstance()
+        user = fAuth.getCurrentUser()!!;
+
+        var headerView : View = navView.getHeaderView(0)
+        headText = headerView.findViewById(R.id.EMAILid)
         toggle = ActionBarDrawerToggle(this,drawerlayout,R.string.open,R.string.close)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -43,6 +53,19 @@ class ItemListPageAfterLoginUser : AppCompatActivity() {
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+
+        val docRef =
+            db.collection("STUDENT").document(user.getUid())
+        docRef.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val document = task.result
+                if (document!!.exists()) {
+                  headText.text = document.data?.get("username").toString()
+                }
+            } else {
+                Log.d("info", "get failed with ", task.exception)
+            }
+        }
         val user = ArrayList<dataModel>()
        /* user . add(dataModel("balaram"))
         user . add(dataModel("ishita"))
