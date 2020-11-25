@@ -1,5 +1,6 @@
 package munik.androidprojects.tradeapp
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -67,6 +68,7 @@ class Available : Fragment() {
                 .addOnFailureListener { e ->
                     Toast.makeText(activity,"not added due to some reason please try again", Toast.LENGTH_SHORT).show()
                 }
+            startActivity(Intent(context,ItemListPageAfterLoginUser::class.java))
         }
         return view
     }
