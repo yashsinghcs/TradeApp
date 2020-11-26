@@ -15,7 +15,7 @@ class SignupPage : AppCompatActivity() {
 
     private lateinit var loginButton_SignupPage: Button
     private lateinit var auth: FirebaseAuth
-    private lateinit var email : EditText
+    private lateinit var username : EditText
     private lateinit var password : EditText
     private lateinit var re_enter_password : EditText
     private lateinit var phoneNo : EditText
@@ -27,7 +27,7 @@ class SignupPage : AppCompatActivity() {
 
         //initializing the View class object
         loginButton_SignupPage = findViewById(R.id.sighupverify_button_OTP)
-        email = findViewById(R.id.username_signUp)
+        username = findViewById(R.id.username_signUp)
         password = findViewById(R.id.password_signUp)
         re_enter_password = findViewById(R.id.reEnterPassword_signUp)
         phoneNo = findViewById(R.id.Phoneno_signUp)
@@ -45,9 +45,9 @@ class SignupPage : AppCompatActivity() {
     }
 
     private fun signUpUser(){
-        if (email.text.toString().isEmpty()) {
-            email.error = "please enter username"
-            email.requestFocus()
+        if (username.text.toString().isEmpty()) {
+            username.error = "please enter username"
+            username.requestFocus()
             return
         }
         if (password.text.toString().isEmpty()) {
@@ -55,7 +55,7 @@ class SignupPage : AppCompatActivity() {
             password.requestFocus()
             return
         }
-        auth.createUserWithEmailAndPassword(email.text.toString(),password.text.toString()).addOnCompleteListener(this){task ->
+        auth.createUserWithEmailAndPassword(e_mail.text.toString(),password.text.toString()).addOnCompleteListener(this){task ->
             if(task.isSuccessful){
                 doAddition()
                 Toast.makeText(baseContext,"account created succsesfully",Toast.LENGTH_SHORT).show();
@@ -87,7 +87,7 @@ class SignupPage : AppCompatActivity() {
         val userdetails: MutableMap<String, Any> = HashMap()
         userdetails["phoneNo"] = phoneNo.text.toString()
         userdetails["email"] = e_mail.text.toString()
-        userdetails["username"] = email.text.toString()
+        userdetails["username"] = username.text.toString()
 
         //Toast.makeText(Signup_student.this, "user created", Toast.LENGTH_SHORT).show();
         //putting other data like name ,email etc into the fire base collection name users
