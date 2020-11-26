@@ -1,13 +1,12 @@
 package munik.androidprojects.tradeapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_login_page.*
 
 class ForgetPassword : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -37,6 +36,10 @@ class ForgetPassword : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Log.d("sucess", "Email sent.")
                     Toast.makeText(baseContext, "recovery mail sent", Toast.LENGTH_SHORT).show();
+                    finish()
+                }
+                else{
+                    Toast.makeText(baseContext,"some error occured", Toast.LENGTH_SHORT).show()
                 }
             }
     }

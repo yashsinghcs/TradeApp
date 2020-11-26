@@ -55,6 +55,12 @@ class SignupPage : AppCompatActivity() {
             password.requestFocus()
             return
         }
+        if(password.text.toString().length<5){
+            password.error = "password length must be 6 and above"
+            password.requestFocus()
+            return
+
+        }
         auth.createUserWithEmailAndPassword(e_mail.text.toString(),password.text.toString()).addOnCompleteListener(this){task ->
             if(task.isSuccessful){
                 doAddition()
@@ -63,7 +69,7 @@ class SignupPage : AppCompatActivity() {
                 finish()
             }
             else{
-                Toast.makeText(baseContext,"Signup Failed.Try again after some time",Toast.LENGTH_SHORT).show();
+                Toast.makeText(baseContext,"Signup"+e_mail.text.toString(),Toast.LENGTH_SHORT).show();
             }
         }
     }
