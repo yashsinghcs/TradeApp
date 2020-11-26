@@ -44,7 +44,7 @@ class SignupPage : AppCompatActivity() {
         }
     }
 
-    private fun signUpUser(){
+    private fun signUpUser() {
         if (username.text.toString().isEmpty()) {
             username.error = "please enter username"
             username.requestFocus()
@@ -55,22 +55,37 @@ class SignupPage : AppCompatActivity() {
             password.requestFocus()
             return
         }
-        if(password.text.toString().length<5){
+        if (password.text.toString().length < 5) {
             password.error = "password length must be 6 and above"
             password.requestFocus()
             return
 
         }
-        auth.createUserWithEmailAndPassword(e_mail.text.toString(),password.text.toString()).addOnCompleteListener(this){task ->
-            if(task.isSuccessful){
-                doAddition()
-                Toast.makeText(baseContext,"account created succsesfully",Toast.LENGTH_SHORT).show();
-                startActivity(Intent(this,LoginPage::class.java))
-                finish()
-            }
-            else{
-                Toast.makeText(baseContext,"Signup"+e_mail.text.toString(),Toast.LENGTH_SHORT).show();
-            }
+        if (password.text.toString().equals(re_enter_password.text.toString())) {
+            auth.createUserWithEmailAndPassword(e_mail.text.toString(), password.text.toString())
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        doAddition()
+                        Toast.makeText(
+                            baseContext,
+                            "account created succsesfully",
+                            Toast.LENGTH_SHORT
+                        ).show();
+                        startActivity(Intent(this, LoginPage::class.java))
+                        finish()
+                    } else {
+                        Toast.makeText(
+                            baseContext,
+                            "Signup failed please check and try again",
+                            Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                }
+        }
+        else{
+            re_enter_password.error="passwords do no match"
+            re_enter_password.requestFocus()
+            return
         }
     }
 
