@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_login_page.*
 
 class ForgetPassword : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+
     private lateinit var username : EditText
     private lateinit var mobileno : EditText
     private lateinit var email : EditText
@@ -31,7 +32,7 @@ class ForgetPassword : AppCompatActivity() {
 
     }
     fun reset(){
-        auth.sendPasswordResetEmail(email.toString())
+        auth.sendPasswordResetEmail(email.text.toString())
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d("sucess", "Email sent.")
