@@ -18,6 +18,7 @@ class LoginPage : AppCompatActivity() {
     private lateinit var Auth: FirebaseAuth
     private lateinit var username: EditText
     private lateinit var password: EditText
+    private var checker : Int =0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_page)
@@ -50,17 +51,7 @@ class LoginPage : AppCompatActivity() {
     }
 
     private fun doLogin(){
-          fun updateUI(currentuser:FirebaseUser?){
-            if(currentuser!=null){
-                Toast.makeText(baseContext,"Login sucsessful", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this,ItemListPageAfterLoginUser::class.java))
-                finish()
-            }
-            else{
-                Toast.makeText(baseContext,"Login Failed", Toast.LENGTH_SHORT).show()
-            }
 
-        }
         if (username.text.toString().isEmpty()) {
             username.error = "please enter username"
             username.requestFocus()
@@ -85,14 +76,31 @@ class LoginPage : AppCompatActivity() {
             }
         }
     }
-    public override fun onStart() {
-        super.onStart()
-        val user:FirebaseUser?=Auth.currentUser
-        if(user!=null){
+    fun updateUI(currentuser:FirebaseUser?){
+        if(currentuser!=null){
             Toast.makeText(baseContext,"Login sucsessful", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this,ItemListPageAfterLoginUser::class.java))
             finish()
         }
+        else{
+            if(checker == 0){
+                checker = 1
+            }else {
+                Toast.makeText(baseContext, "Login Failed", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    }
+
+    public override fun onStart() {
+        super.onStart()
+        val user:FirebaseUser?=Auth.currentUser
+        updateUI(user)
+        /*if(user!=null){
+            Toast.makeText(baseContext,"Login sucsessful", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this,ItemListPageAfterLoginUser::class.java))
+            finish()
+        }*/
 
     }
 }

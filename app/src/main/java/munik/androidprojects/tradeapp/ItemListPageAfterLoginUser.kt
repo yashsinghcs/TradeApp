@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -137,6 +138,7 @@ class ItemListPageAfterLoginUser : AppCompatActivity() {
                 }
                R.id.logout ->{
                    FirebaseAuth.getInstance().signOut();
+                   Toast.makeText(baseContext, "Logged out Successfully", Toast.LENGTH_SHORT).show()
                    startActivity(Intent(this,LoginPage::class.java))
                    finish()
                }
