@@ -32,6 +32,7 @@ class ItemListPageAfterLoginUser : AppCompatActivity() {
     private lateinit var headText : TextView
     private lateinit var user : FirebaseUser
     private lateinit var fAuth : FirebaseAuth
+    private  var checker : Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_list_page_after_login_user)
@@ -55,16 +56,35 @@ class ItemListPageAfterLoginUser : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
-        val docRef =
-            db.collection("STUDENT").document(user.getUid())
-        docRef.get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val document = task.result
-                if (document!!.exists()) {
-                  headText.text = document.data?.get("username").toString()
+
+
+            val docRef =
+                db.collection("STUDENT").document(user.getUid())
+
+            docRef.get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val document = task.result
+                    if (document!!.exists()) {
+                        headText.text = document.data?.get("email").toString()
+                        checker = 1;
+                    }
+                } else {
+                    Log.d("info", "get failed with ", task.exception)
                 }
-            } else {
-                Log.d("info", "get failed with ", task.exception)
+            }
+        if( checker == 0){
+            val docRef =
+                db.collection("PHONE_STUDENT").document(user.getUid())
+
+            docRef.get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val document = task.result
+                    if (document!!.exists()) {
+                        headText.text = document.data?.get("email").toString()
+                    }
+                } else {
+                    Log.d("info", "get failed with ", task.exception)
+                }
             }
         }
         val user = ArrayList<dataModel>()

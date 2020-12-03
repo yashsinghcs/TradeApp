@@ -12,6 +12,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import java.nio.charset.MalformedInputException
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 class SignupPage : AppCompatActivity() {
 
@@ -84,6 +86,13 @@ class SignupPage : AppCompatActivity() {
             return
 
         }
+        if(checker(phoneNo.text.toString())){
+
+        }else{
+            phoneNo.error = "enter proper phoneNo"
+            phoneNo.requestFocus()
+            return
+        }
         if (password.text.toString().equals(re_enter_password.text.toString())) {
 
         }
@@ -94,6 +103,7 @@ class SignupPage : AppCompatActivity() {
             re_enter_password.requestFocus()
             return
         }
+
         progressBar.visibility = View.VISIBLE
         loginButton_SignupPage.isEnabled = false
         if (password.text.toString().equals(re_enter_password.text.toString())) {
@@ -152,5 +162,10 @@ class SignupPage : AppCompatActivity() {
                 }
         }
 
+    }
+    private fun checker(phone : String) : Boolean{
+        val e : Pattern = Pattern.compile("[6-9][0-9]{9}")
+        val m : Matcher = e.matcher(phone)
+        return m.matches()
     }
 }

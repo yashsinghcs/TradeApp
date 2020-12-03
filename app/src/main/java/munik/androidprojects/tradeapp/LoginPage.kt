@@ -3,10 +3,8 @@ package munik.androidprojects.tradeapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import java.nio.charset.MalformedInputException
@@ -18,8 +16,8 @@ class LoginPage : AppCompatActivity() {
     private lateinit var Auth: FirebaseAuth
     private lateinit var username: EditText
     private lateinit var password: EditText
-    private lateinit var ab : TextView
-    private var checker : Int =0
+    private lateinit var login_phone : Button
+    private lateinit var progressBar: ProgressBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_page)
@@ -30,7 +28,8 @@ class LoginPage : AppCompatActivity() {
         loginbutton = findViewById(R.id.login)
         username=findViewById(R.id.username)
         password=findViewById(R.id.password)
-        ab = findViewById(R.id.textView4)
+        login_phone = findViewById(R.id.loginWith_phone)
+        progressBar = findViewById(R.id.progressBar2)
         Auth=FirebaseAuth.getInstance()
         //FirebaseAuth.getInstance().signOut();
        /* if (Auth!!.currentUser != null) {
@@ -51,7 +50,7 @@ class LoginPage : AppCompatActivity() {
 
         }
 
-        ab.setOnClickListener{
+        login_phone.setOnClickListener{
             startActivity(Intent(this,LoginWithPhoneNo::class.java))
         }
     }
@@ -68,7 +67,16 @@ class LoginPage : AppCompatActivity() {
             password.requestFocus()
             return
         }
-
+        if (password.text.toString().length < 6) {
+            password.error = "please enter proper password"
+            password.requestFocus()
+            return
+        }
+        progressBar.visibility = View.VISIBLE
+        loginbutton.isEnabled = false
+        login_phone.isEnabled = false
+        signup_button_LoginPage.isEnabled = false
+        forgetpassword.isEnabled = false
         Auth.signInWithEmailAndPassword(username.text.toString(),password.text.toString()).addOnCompleteListener{
                 task ->
             if(task.isSuccessful){
@@ -85,16 +93,28 @@ class LoginPage : AppCompatActivity() {
     }
     fun updateUI(currentuser:FirebaseUser?){
         if(currentuser!=null){
+            progressBar.visibility = View.GONE
+            loginbutton.isEnabled = true
+            login_phone.isEnabled = true
+            signup_button_LoginPage.isEnabled = true
+            forgetpassword.isEnabled = true
             Toast.makeText(baseContext,"Login sucsessful", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this,ItemListPageAfterLoginUser::class.java))
+            val intent = Intent(this,ItemListPageAfterLoginUser::class.java)
+            startActivity(intent)
             finish()
         }
         else{
-            if(checker == 0){
+            /*if(checker == 0){
                 checker = 1
             }else {
                 Toast.makeText(baseContext, "Login Failed", Toast.LENGTH_SHORT).show()
-            }
+            }*/
+            Toast.makeText(baseContext, "Login Failed", Toast.LENGTH_SHORT).show()
+            progressBar.visibility = View.GONE
+            loginbutton.isEnabled = true
+            login_phone.isEnabled = true
+            signup_button_LoginPage.isEnabled = true
+            forgetpassword.isEnabled = true
         }
 
     }
@@ -102,12 +122,12 @@ class LoginPage : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
         val user:FirebaseUser?=Auth.currentUser
-        updateUI(user)
-        /*if(user!=null){
+        //updateUI(user)
+        if(user!=null){
             Toast.makeText(baseContext,"Login sucsessful", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this,ItemListPageAfterLoginUser::class.java))
             finish()
-        }*/
+        }
 
     }
 }
