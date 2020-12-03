@@ -42,11 +42,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.39" />
 
-    <com.goodiebag.pinview.Pinview
+    <com.chaos.view.PinView
         android:id="@+id/pinView"
         style="@style/PinWidget.PinView"
-        android:layout_width="327dp"
-        android:layout_height="47dp"
+        android:layout_width="372dp"
+        android:layout_height="60dp"
         android:background="@drawable/custome_input"
         android:inputType="number"
         app:itemCount="6"

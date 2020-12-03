@@ -110,6 +110,8 @@ class SignupPage : AppCompatActivity() {
                         ).show();
                         val goToOtpPage : Intent = Intent(this,EnteringOTP::class.java)
                         goToOtpPage.putExtra("phone","+91"+phoneNo.text.toString())
+                        goToOtpPage.putExtra("email",e_mail.text.toString())
+                        goToOtpPage.putExtra("name",name.text.toString())
                         startActivity(goToOtpPage)
                         finish()
                     } else {

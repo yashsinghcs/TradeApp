@@ -75,6 +75,7 @@ class LoginPage : AppCompatActivity() {
                 updateUI(null)
             }
         }
+
     }
     fun updateUI(currentuser:FirebaseUser?){
         if(currentuser!=null){

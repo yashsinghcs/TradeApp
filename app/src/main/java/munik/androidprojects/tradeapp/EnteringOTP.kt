@@ -5,13 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.chaos.view.PinView
 import com.goodiebag.pinview.Pinview
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.firestore.DocumentReference
 import java.util.concurrent.TimeUnit
 
 class EnteringOTP : AppCompatActivity() {
@@ -22,6 +26,8 @@ class EnteringOTP : AppCompatActivity() {
     private lateinit var  verification : String
     private lateinit var resendOTP : TextView
     private lateinit var phonenumber : String
+    private lateinit var name : String
+    private lateinit var e_mail : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entering_o_t_p);
@@ -29,8 +35,12 @@ class EnteringOTP : AppCompatActivity() {
 
         val intent : Intent = intent
         phonenumber = intent.getStringExtra("phone") as String
+        name = intent.getStringExtra("name") as String
+        e_mail = intent.getStringExtra("email") as String
 
-        val pinview = findViewById<Pinview>(R.id.pinView)
+        FirebaseAuth.getInstance().signOut();
+        val pinview = findViewById<EditText>(R.id.pinView)
+        val verify = findViewById<Button>(R.id.sighupverify_button_OTP)
         firebseAuth = FirebaseAuth.getInstance()
         resendOTP = findViewById(R.id.resendOtp)
         mCallbacks = object: PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -59,10 +69,10 @@ class EnteringOTP : AppCompatActivity() {
         }
 
         sendOTP(phonenumber)
-        pinview.setPinViewEventListener{ pinview, fromUser ->
-            Toast.makeText(baseContext,"pin value"+pinview.value,Toast.LENGTH_SHORT).show()
+        verify.setOnClickListener{
+            Toast.makeText(baseContext,"pin value"+pinview.text.toString(),Toast.LENGTH_SHORT).show()
 
-            val credential : PhoneAuthCredential = PhoneAuthProvider.getCredential(verification,pinview.value)
+            val credential : PhoneAuthCredential = PhoneAuthProvider.getCredential(verification,pinview.text.toString())
             verifyAuthentication(credential)
         }
 
@@ -85,10 +95,48 @@ class EnteringOTP : AppCompatActivity() {
 
     }
     private fun verifyAuthentication(credential: PhoneAuthCredential){
-        firebseAuth.currentUser?.linkWithCredential(credential)?.addOnSuccessListener {
+        firebseAuth.signInWithCredential(credential).addOnSuccessListener {
             Toast.makeText(baseContext,"account created successfully",Toast.LENGTH_SHORT).show()
+            doAddition()
         }
     }
+    private fun doAddition() {
 
+        val userdetails: MutableMap<String, Any> = HashMap()
+        userdetails["phoneNo"] = phonenumber
+        userdetails["email"] = e_mail
+        userdetails["name"] = name
+
+        //Toast.makeText(Signup_student.this, "user created", Toast.LENGTH_SHORT).show();
+        //putting other data like name ,email etc into the fire base collection name users
+
+        //Toast.makeText(Signup_student.this, "user created", Toast.LENGTH_SHORT).show();
+        //putting other data like name ,email etc into the fire base collection name users
+        val userId_techer = firebseAuth.getCurrentUser()?.getUid()
+        val documentReference: DocumentReference =
+            db.collection("PHONE_STUDENT").document(userId_techer as String)
+        documentReference.set(userdetails)
+            .addOnSuccessListener { // Log.i("info", "on success:user  profile is created" + userId_techer);
+                //. Log.i("info","on success:user  profile is created"+userId);
+                //progressBar.visibility = View.GONE
+                //loginButton_SignupPage.isEnabled = true
+
+                Toast.makeText(baseContext,"added succsesfully", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                //progressBar.visibility = View.GONE
+                //loginButton_SignupPage.isEnabled = true
+
+                Toast.makeText(baseContext,"not added due to some reason please try again", Toast.LENGTH_SHORT).show()
+            }
+        /*db.collection("userdetails")
+            .add(userdetails)
+            .addOnSuccessListener { documentReference ->
+                Toast.makeText(baseContext,"added succsesfully", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(baseContext,"not added due to some reason please try again", Toast.LENGTH_SHORT).show()
+            }*/
+    }
 
 }
