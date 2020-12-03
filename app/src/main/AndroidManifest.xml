@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ItemListPageAfterLoginUser"></activity>
+        <activity android:name=".LoginWithPhoneNo"></activity>
+        <activity android:name=".ItemListPageAfterLoginUser" />
         <activity
             android:name=".ForgetPassword"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

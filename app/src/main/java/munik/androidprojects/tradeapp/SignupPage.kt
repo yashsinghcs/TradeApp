@@ -100,7 +100,7 @@ class SignupPage : AppCompatActivity() {
             auth.createUserWithEmailAndPassword(e_mail.text.toString(), password.text.toString())
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        doAddition()
+
                         progressBar.visibility = View.GONE
                         loginButton_SignupPage.isEnabled = true
                         Toast.makeText(
@@ -108,12 +108,38 @@ class SignupPage : AppCompatActivity() {
                             "account created succsesfully",
                             Toast.LENGTH_SHORT
                         ).show();
-                        val goToOtpPage : Intent = Intent(this,EnteringOTP::class.java)
-                        goToOtpPage.putExtra("phone","+91"+phoneNo.text.toString())
-                        goToOtpPage.putExtra("email",e_mail.text.toString())
-                        goToOtpPage.putExtra("name",name.text.toString())
-                        startActivity(goToOtpPage)
-                        finish()
+                        //doAddition()
+                        val userdetails: MutableMap<String, Any> = HashMap()
+                        userdetails["phoneNo"] = phoneNo.text.toString()
+                        userdetails["email"] = e_mail.text.toString()
+                        userdetails["name"] = name.text.toString()
+
+                        val userId_techer = auth.getCurrentUser()?.getUid()
+                        val documentReference: DocumentReference =
+                            db.collection("STUDENT").document(userId_techer as String)
+
+                        documentReference.set(userdetails)
+                            .addOnSuccessListener { // Log.i("info", "on success:user  profile is created" + userId_techer);
+                                //. Log.i("info","on success:user  profile is created"+userId);
+                                progressBar.visibility = View.GONE
+                                loginButton_SignupPage.isEnabled = true
+
+                                Toast.makeText(baseContext,"added succsesfully", Toast.LENGTH_SHORT).show()
+
+                                val goToOtpPage : Intent = Intent(this,EnteringOTP::class.java)
+                                goToOtpPage.putExtra("phone","+91"+phoneNo.text.toString())
+                                goToOtpPage.putExtra("email",e_mail.text.toString())
+                                goToOtpPage.putExtra("name",name.text.toString())
+                                startActivity(goToOtpPage)
+                                finish()
+                            }
+                            .addOnFailureListener {
+                                progressBar.visibility = View.GONE
+                                loginButton_SignupPage.isEnabled = true
+
+                                Toast.makeText(baseContext,"not added due to some reason please try again", Toast.LENGTH_SHORT).show()
+                            }
+
                     } else {
                         progressBar.visibility = View.GONE
                         loginButton_SignupPage.isEnabled = true
@@ -126,44 +152,5 @@ class SignupPage : AppCompatActivity() {
                 }
         }
 
-    }
-
-    private fun doAddition() {
-
-        val userdetails: MutableMap<String, Any> = HashMap()
-        userdetails["phoneNo"] = phoneNo.text.toString()
-        userdetails["email"] = e_mail.text.toString()
-        userdetails["name"] = name.text.toString()
-
-        //Toast.makeText(Signup_student.this, "user created", Toast.LENGTH_SHORT).show();
-        //putting other data like name ,email etc into the fire base collection name users
-
-        //Toast.makeText(Signup_student.this, "user created", Toast.LENGTH_SHORT).show();
-        //putting other data like name ,email etc into the fire base collection name users
-        val userId_techer = auth.getCurrentUser()?.getUid()
-        val documentReference: DocumentReference =
-            db.collection("STUDENT").document(userId_techer as String)
-        documentReference.set(userdetails)
-            .addOnSuccessListener { // Log.i("info", "on success:user  profile is created" + userId_techer);
-                //. Log.i("info","on success:user  profile is created"+userId);
-                progressBar.visibility = View.GONE
-                loginButton_SignupPage.isEnabled = true
-
-                Toast.makeText(baseContext,"added succsesfully", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                progressBar.visibility = View.GONE
-                loginButton_SignupPage.isEnabled = true
-
-                Toast.makeText(baseContext,"not added due to some reason please try again", Toast.LENGTH_SHORT).show()
-            }
-        /*db.collection("userdetails")
-            .add(userdetails)
-            .addOnSuccessListener { documentReference ->
-                Toast.makeText(baseContext,"added succsesfully", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(baseContext,"not added due to some reason please try again", Toast.LENGTH_SHORT).show()
-            }*/
     }
 }

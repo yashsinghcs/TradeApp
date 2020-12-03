@@ -38,9 +38,10 @@ class EnteringOTP : AppCompatActivity() {
         name = intent.getStringExtra("name") as String
         e_mail = intent.getStringExtra("email") as String
 
-        FirebaseAuth.getInstance().signOut();
+       // FirebaseAuth.getInstance().signOut();
         val pinview = findViewById<EditText>(R.id.pinView)
         val verify = findViewById<Button>(R.id.sighupverify_button_OTP)
+        //FirebaseAuth.getInstance().signOut();
         firebseAuth = FirebaseAuth.getInstance()
         resendOTP = findViewById(R.id.resendOtp)
         mCallbacks = object: PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -99,7 +100,7 @@ class EnteringOTP : AppCompatActivity() {
             Toast.makeText(baseContext,"account created successfully",Toast.LENGTH_SHORT).show()
             doAddition()
             startActivity(Intent(baseContext,LoginPage::class.java))
-            FirebaseAuth.getInstance().signOut();
+            //FirebaseAuth.getInstance().signOut();
         }
     }
     private fun doAddition() {

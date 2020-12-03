@@ -18,6 +18,7 @@ class LoginPage : AppCompatActivity() {
     private lateinit var Auth: FirebaseAuth
     private lateinit var username: EditText
     private lateinit var password: EditText
+    private lateinit var ab : TextView
     private var checker : Int =0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +30,7 @@ class LoginPage : AppCompatActivity() {
         loginbutton = findViewById(R.id.login)
         username=findViewById(R.id.username)
         password=findViewById(R.id.password)
+        ab = findViewById(R.id.textView4)
         Auth=FirebaseAuth.getInstance()
         //FirebaseAuth.getInstance().signOut();
        /* if (Auth!!.currentUser != null) {
@@ -47,6 +49,10 @@ class LoginPage : AppCompatActivity() {
             doLogin()
             //startActivity( Intent(this,ItemListPageAfterLoginUser::class.java))
 
+        }
+
+        ab.setOnClickListener{
+            startActivity(Intent(this,LoginWithPhoneNo::class.java))
         }
     }
 
