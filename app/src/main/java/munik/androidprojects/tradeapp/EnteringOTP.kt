@@ -98,6 +98,8 @@ class EnteringOTP : AppCompatActivity() {
         firebseAuth.signInWithCredential(credential).addOnSuccessListener {
             Toast.makeText(baseContext,"account created successfully",Toast.LENGTH_SHORT).show()
             doAddition()
+            startActivity(Intent(baseContext,LoginPage::class.java))
+            FirebaseAuth.getInstance().signOut();
         }
     }
     private fun doAddition() {
