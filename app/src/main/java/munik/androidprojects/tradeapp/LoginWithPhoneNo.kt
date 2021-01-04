@@ -2,6 +2,7 @@ package munik.androidprojects.tradeapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -46,6 +47,7 @@ class LoginWithPhoneNo : AppCompatActivity() {
                 super.onCodeSent(p0, p1)
                 verification = p0
                 token = p1
+                OTP.visibility = View.VISIBLE
 
             }
 
