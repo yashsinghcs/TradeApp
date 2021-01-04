@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
@@ -32,6 +33,7 @@ class ItemListPageAfterLoginUser : AppCompatActivity() {
     private lateinit var headText : TextView
     private lateinit var user : FirebaseUser
     private lateinit var fAuth : FirebaseAuth
+    private lateinit var profilePic : ImageView
     private  var checker : Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +50,7 @@ class ItemListPageAfterLoginUser : AppCompatActivity() {
 
         var headerView : View = navView.getHeaderView(0)
         headText = headerView.findViewById(R.id.EMAILid)
+        profilePic = headerView.findViewById(R.id.profile_image)
         toggle = ActionBarDrawerToggle(this,drawerlayout,R.string.open,R.string.close)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -164,6 +167,9 @@ class ItemListPageAfterLoginUser : AppCompatActivity() {
                }
             }
             true
+        }
+        profilePic.setOnClickListener{
+
         }
     }
 
