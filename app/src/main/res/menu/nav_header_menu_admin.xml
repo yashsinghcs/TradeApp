@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/request_admin"
+        android:title="@string/request"
+        android:icon="@drawable/ic_baseline_request"/>
+    <item
+        android:id="@+id/available_admin"
+        android:title="@string/available"
+        android:icon="@drawable/ic_baseline_available"/>
+    <item
+        android:id="@+id/messeges_admin"
+        android:title="@string/messeges"
+        android:icon="@drawable/ic_baseline_message"/>
+    <item
+        android:id="@+id/logout_admin"
+        android:title="@string/logout"
+        android:icon="@drawable/ic_baseline_logout"/>
+</menu>
