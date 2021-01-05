@@ -78,10 +78,19 @@ class LoginPage : AppCompatActivity() {
         signup_button_LoginPage.isEnabled = false
         forgetpassword.isEnabled = false
 
-        if (username.text.toString().equals("balaramsamanta@gmail.com") && password.text.toString()
-                .equals("Ballu212")) {
-            startActivity(Intent(this, AdminPannel::class.java))
-            finish()
+        if (username.text.toString().equals("balaramsamanta1@gmail.com") && password.text.toString()
+                .equals("Ballu@12")) {
+            Auth.signInWithEmailAndPassword(username.text.toString(), password.text.toString())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val user: FirebaseUser? = Auth.currentUser
+                        updateUI_admin(user)
+                    } else {
+
+                        updateUI_admin(null)
+                    }
+                }
+
         } else {
             Auth.signInWithEmailAndPassword(username.text.toString(), password.text.toString())
                 .addOnCompleteListener { task ->
@@ -107,6 +116,33 @@ class LoginPage : AppCompatActivity() {
             val intent = Intent(this,ItemListPageAfterLoginUser::class.java)
             startActivity(intent)
             finish()
+        }
+        else{
+            /*if(checker == 0){
+                checker = 1
+            }else {
+                Toast.makeText(baseContext, "Login Failed", Toast.LENGTH_SHORT).show()
+            }*/
+            Toast.makeText(baseContext, "Login Failed", Toast.LENGTH_SHORT).show()
+            progressBar.visibility = View.GONE
+            loginbutton.isEnabled = true
+            login_phone.isEnabled = true
+            signup_button_LoginPage.isEnabled = true
+            forgetpassword.isEnabled = true
+        }
+
+    }
+    fun updateUI_admin(currentuser:FirebaseUser?){
+        if(currentuser!=null){
+            progressBar.visibility = View.GONE
+            loginbutton.isEnabled = true
+            login_phone.isEnabled = true
+            signup_button_LoginPage.isEnabled = true
+            forgetpassword.isEnabled = true
+            Toast.makeText(baseContext,"Login sucsessful", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, AdminPannel::class.java))
+            finish()
+
         }
         else{
             /*if(checker == 0){

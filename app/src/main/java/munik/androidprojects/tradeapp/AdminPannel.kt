@@ -5,14 +5,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 class AdminPannel : AppCompatActivity() {
+
 
     lateinit var drawerlayout : DrawerLayout
     lateinit var navView : NavigationView
@@ -22,6 +25,8 @@ class AdminPannel : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_pannel)
+
+
 
         drawerlayout = findViewById(R.id.drawerlayout_ItemListPageAfterLoginUser_admin)
         navView = findViewById(R.id.navView_admin)
@@ -33,16 +38,16 @@ class AdminPannel : AppCompatActivity() {
 
         navView.setNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.available -> {
-                    available= Available_admin()
+                R.id.available_admin -> {
+                    available = Available_admin()
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, available)
+                        .replace(R.id.container_admin, available)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit()
                 }
-                R.id.request ->{
+                R.id.request_admin ->{
                     request = Request_admin()
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, request)
+                        .replace(R.id.container_admin, request)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit()
                 }
                 R.id.messeges ->{
@@ -57,6 +62,8 @@ class AdminPannel : AppCompatActivity() {
             }
             true
         }
+
+        val user = ArrayList<dataModel>()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -65,5 +72,9 @@ class AdminPannel : AppCompatActivity() {
 
         }
         return super.onOptionsItemSelected(item)
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this,AdminPannel::class.java))
     }
 }
