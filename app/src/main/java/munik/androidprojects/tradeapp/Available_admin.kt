@@ -1,14 +1,24 @@
 package munik.androidprojects.tradeapp
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.SearchView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.storage.FileDownloadTask
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import java.io.File
+import java.io.IOException
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,6 +28,9 @@ private const val ARG_PARAM2 = "param2"
 private lateinit var recyclerView : RecyclerView
 private lateinit var searchView: SearchView
 private lateinit var adapter :customeAdapter_admin
+private lateinit var item_image : ImageView
+private lateinit var mStoragereference1: StorageReference
+private lateinit var bitmap1 : Bitmap
 /**
  * A simple [Fragment] subclass.
  * Use the [Available_admin.newInstance] factory method to
@@ -45,8 +58,10 @@ class Available_admin : Fragment() {
 
         recyclerView = view.findViewById(R.id.recycler_view_item_admin) as RecyclerView
         searchView = view.findViewById(R.id.searchView_admin) as SearchView
-
+        item_image = view.findViewById(R.id.imageofthe_item_available)
         recyclerView.layoutManager = LinearLayoutManager(context)
+
+
         val user = ArrayList<dataModel>()
         db.collection("items").get().addOnSuccessListener { documents ->
             for (document in documents) {
@@ -56,7 +71,24 @@ class Available_admin : Fragment() {
 
                 //val k = a.toString().substring(10,a.toString().length-1)
                 Log.d("info", "get failed with =" + document.data.toString())
-                user.add(dataModel(a,b ,c ))
+                var k : String = "" + a + "" + c + "" + b
+                mStoragereference1 = FirebaseStorage.getInstance().reference
+                    .child("items_available/" + k)
+                try {
+                    val file = File.createTempFile("image", "jpg")
+                    mStoragereference1.getFile(file)
+                        .addOnSuccessListener(OnSuccessListener<FileDownloadTask.TaskSnapshot?> {
+                            var bitmap1 =
+                                BitmapFactory.decodeFile(file.absolutePath)
+                            /* (findViewById<View>(R.id.profile_image) as ImageView).setImageBitmap(
+                                 bitmap
+                             )
+                             profilePic.setImageBitmap(bitmap)*/
+                        })
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+               // user.add(dataModel(a,b ,c, bitmap1))
             }
             adapter = customeAdapter_admin(user)
             recyclerView.adapter = adapter
@@ -76,6 +108,7 @@ class Available_admin : Fragment() {
             }
 
         })
+
         return view
     }
 

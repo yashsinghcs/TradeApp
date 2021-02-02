@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
@@ -65,6 +66,8 @@ class ItemListPageAfterLoginUser : AppCompatActivity() {
     lateinit var currentPhotoPath: String
     private  var checker : Int = 0
     private lateinit var mStoragereference: StorageReference
+    private lateinit var mStoragereference1: StorageReference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_list_page_after_login_user)
@@ -112,6 +115,7 @@ class ItemListPageAfterLoginUser : AppCompatActivity() {
                                     (findViewById<View>(R.id.profile_image) as ImageView).setImageBitmap(
                                         bitmap
                                     )
+                                    Log.d("info", "get failed with "+bitmap)
                                     profilePic.setImageBitmap(bitmap)
                                 })
                         } catch (e: IOException) {
@@ -169,13 +173,33 @@ class ItemListPageAfterLoginUser : AppCompatActivity() {
        // recyclerView.adapter = adapter
         db.collection("items").get().addOnSuccessListener { documents ->
             for (document in documents) {
-                val a = document.data.get("name_of_item") as String
-                val b = document.data.get("price") as String + "/-"
-                val c = document.data.get("quantity") as String + "m"
+                var a = document.data.get("name_of_item") as String
+                var b = document.data.get("price") as String
+                var c = document.data.get("quantity") as String
 
                 //val k = a.toString().substring(10,a.toString().length-1)
                 Log.d("info", "get failed with =" + document.data.toString())
-                user.add(dataModel(a,b ,c ))
+                var k : String = "" + a + "" + c + "" + b
+                Toast.makeText(this,""+k,Toast.LENGTH_SHORT).show()
+                Log.d("info", "get failed with   "+k)
+                mStoragereference1 = FirebaseStorage.getInstance().reference
+                    .child("items_available/"+k)
+                try {
+                    val file = File.createTempFile("image", "jpg")
+                    mStoragereference1.getFile(file).addOnSuccessListener(OnSuccessListener<FileDownloadTask.TaskSnapshot?> {
+                        var bitmap1 =
+                            BitmapFactory.decodeFile(file.absolutePath)
+                        (findViewById<View>(R.id.profile_image) as ImageView).setImageBitmap(
+                            bitmap1)
+                    }).addOnFailureListener( {
+                        Toast.makeText(this,"failed",Toast.LENGTH_SHORT).show()
+                    })
+                    user.add(dataModel(a,b+"/-" ,c+"m",file,mStoragereference1))
+                } catch (e: IOException) {
+                    //e.printStackTrace()
+                    Toast.makeText(this,""+e.printStackTrace(),Toast.LENGTH_SHORT).show()
+                }
+
             }
              adapter = customeAdapter(user)
             recyclerView.adapter = adapter

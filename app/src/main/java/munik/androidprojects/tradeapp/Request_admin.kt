@@ -55,7 +55,7 @@ class Request_admin : Fragment() {
 
                 //val k = a.toString().substring(10,a.toString().length-1)
                 Log.d("info", "get failed with =" + document.data.toString())
-                user.add(dataModel(a,b ,c ))
+               // user.add(dataModel(a,b ,c ,))
             }
             adapter = customeAdapter_admin(user)
             recyclerView.adapter = adapter

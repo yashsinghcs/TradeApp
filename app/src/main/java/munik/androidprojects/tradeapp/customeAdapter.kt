@@ -1,5 +1,6 @@
 package munik.androidprojects.tradeapp
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,13 +34,18 @@ var arrayListFilter = ArrayList<dataModel>()
         holder.textViewName?.text = user.header
         holder.textViewPrice?.text = user.header1
         holder.textViewLength?.text = user.header2
-        holder.image.setImageResource(R.drawable.ic_baseline_available)
+        user.header4.getFile(user.header3).addOnSuccessListener({
+            var bitmap1 =
+                BitmapFactory.decodeFile(user.header3.absolutePath)
+            holder.image.setImageBitmap(
+                bitmap1)
+        })
     }
     class viewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val textViewName = itemView.findViewById(R.id.description)as TextView
         val textViewPrice = itemView.findViewById(R.id.description1)as TextView
         val textViewLength = itemView.findViewById(R.id.description2)as TextView
-        val image = itemView.findViewById(R.id.image) as ImageView
+        val image = itemView.findViewById(R.id.image_list) as ImageView
 
     }
 
