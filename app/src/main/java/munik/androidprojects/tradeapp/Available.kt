@@ -26,7 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
-import com.squareup.picasso.Picasso
+//import com.squareup.picasso.Picasso
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -49,6 +49,7 @@ private lateinit var price : EditText
 private lateinit var auth: FirebaseAuth
 private lateinit var prooced_button : Button
 private lateinit var item_image : ImageView
+private lateinit var unique_id : String
 lateinit var currentPhotoPath: String
 private lateinit var  firebaseStorage: StorageReference
 private lateinit var  returnUri :Uri
@@ -79,6 +80,7 @@ class Available : Fragment() {
         price = view.findViewById(R.id.price)
         prooced_button = view.findViewById(R.id.prooceed)
         auth = FirebaseAuth.getInstance()
+        unique_id = auth.getCurrentUser()?.getUid().toString()
         firebaseStorage = FirebaseStorage.getInstance().getReference()
 
         prooced_button.setOnClickListener {
@@ -86,11 +88,13 @@ class Available : Fragment() {
             userdetails["name_of_item"] = name_of_item.text.toString()
             userdetails["quantity"] = quantity.text.toString()
             userdetails["price"] = price.text.toString()
+            userdetails["unique_id"] = unique_id
 
             db.collection("items")
                 .add(userdetails)
                 .addOnSuccessListener { documentReference ->
-                    var k : String  = "" + name_of_item.text.toString() + "" + quantity.text.toString() + "" + price.text.toString()
+                    //var k : String  = "" + name_of_item.text.toString() + "" + quantity.text.toString() + "" + price.text.toString()
+                    var k : String  = "" + unique_id
                     val image1: StorageReference = firebaseStorage.child("items_available/"+k)
                     image1.putFile(returnUri).addOnSuccessListener {
                         Toast.makeText(activity, "Image is uploaded", Toast.LENGTH_SHORT).show()

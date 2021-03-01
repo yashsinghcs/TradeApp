@@ -125,6 +125,7 @@ class SignupPage : AppCompatActivity() {
                         userdetails["name"] = name.text.toString()
 
                         val userId_techer = auth.getCurrentUser()?.getUid()
+                        userdetails["unique_id"] = auth.getCurrentUser()?.getUid().toString()
                         val documentReference: DocumentReference =
                             db.collection("STUDENT").document(userId_techer as String)
 
@@ -140,6 +141,7 @@ class SignupPage : AppCompatActivity() {
                                 goToOtpPage.putExtra("phone","+91"+phoneNo.text.toString())
                                 goToOtpPage.putExtra("email",e_mail.text.toString())
                                 goToOtpPage.putExtra("name",name.text.toString())
+                                goToOtpPage.putExtra("unique_id",userId_techer.toString())
                                 startActivity(goToOtpPage)
                                 finish()
                             }

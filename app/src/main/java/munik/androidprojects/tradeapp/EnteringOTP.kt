@@ -10,7 +10,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.chaos.view.PinView
-import com.goodiebag.pinview.Pinview
+//import com.goodiebag.pinview.Pinview
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
@@ -28,6 +28,7 @@ class EnteringOTP : AppCompatActivity() {
     private lateinit var phonenumber : String
     private lateinit var name : String
     private lateinit var e_mail : String
+    private lateinit var unique_id : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entering_o_t_p);
@@ -37,7 +38,7 @@ class EnteringOTP : AppCompatActivity() {
         phonenumber = intent.getStringExtra("phone") as String
         name = intent.getStringExtra("name") as String
         e_mail = intent.getStringExtra("email") as String
-
+        unique_id = intent.getStringExtra("unique_id") as String
        // FirebaseAuth.getInstance().signOut();
         val pinview = findViewById<EditText>(R.id.pinView)
         val verify = findViewById<Button>(R.id.sighupverify_button_OTP)
@@ -109,7 +110,7 @@ class EnteringOTP : AppCompatActivity() {
         userdetails["phoneNo"] = phonenumber
         userdetails["email"] = e_mail
         userdetails["name"] = name
-
+        userdetails["unique_id"] = unique_id
         //Toast.makeText(Signup_student.this, "user created", Toast.LENGTH_SHORT).show();
         //putting other data like name ,email etc into the fire base collection name users
 
