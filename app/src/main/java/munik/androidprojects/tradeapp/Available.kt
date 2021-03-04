@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -46,7 +47,7 @@ private const val ARG_PARAM2 = "param2"
 private lateinit var name_of_item : EditText
 private lateinit var quantity :EditText
 private lateinit var price : EditText
-private lateinit var auth: FirebaseAuth
+private lateinit var auth1: FirebaseAuth
 private lateinit var prooced_button : Button
 private lateinit var item_image : ImageView
 private lateinit var unique_id : String
@@ -79,8 +80,8 @@ class Available : Fragment() {
         quantity = view.findViewById(R.id.sizeInMeters_availsble)
         price = view.findViewById(R.id.price)
         prooced_button = view.findViewById(R.id.prooceed)
-        auth = FirebaseAuth.getInstance()
-        unique_id = auth.getCurrentUser()?.getUid().toString()
+        auth1 = FirebaseAuth.getInstance()
+        unique_id = auth1.getCurrentUser()?.getUid().toString()
         firebaseStorage = FirebaseStorage.getInstance().getReference()
 
         prooced_button.setOnClickListener {
@@ -93,8 +94,9 @@ class Available : Fragment() {
             db.collection("items")
                 .add(userdetails)
                 .addOnSuccessListener { documentReference ->
-                    //var k : String  = "" + name_of_item.text.toString() + "" + quantity.text.toString() + "" + price.text.toString()
-                    var k : String  = "" + unique_id
+                    var k : String  = "" + name_of_item.text.toString() + "" + quantity.text.toString() + "" + price.text.toString() + "" + documentReference.id
+                    //var k : String  = "" + unique_id
+
                     val image1: StorageReference = firebaseStorage.child("items_available/"+k)
                     image1.putFile(returnUri).addOnSuccessListener {
                         Toast.makeText(activity, "Image is uploaded", Toast.LENGTH_SHORT).show()

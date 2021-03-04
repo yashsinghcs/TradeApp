@@ -1,4 +1,4 @@
-package munik.androidprojects.tradeapp
+ package munik.androidprojects.tradeapp
 
 import android.app.Activity
 import android.app.ProgressDialog
@@ -176,10 +176,11 @@ class ItemListPageAfterLoginUser : AppCompatActivity() {
                 var a = document.data.get("name_of_item") as String
                 var b = document.data.get("price") as String
                 var c = document.data.get("quantity") as String
-
+                var d = document.data.get("unique_id") as String
+              var e = document.id
                 //val k = a.toString().substring(10,a.toString().length-1)
-                Log.d("info", "get failed with =" + document.data.toString())
-                var k : String = "" + a + "" + c + "" + b
+                Log.d("info", "get failed with =" + document.data.toString() + " " + e)
+                var k : String = "" + a + "" + c + "" + b + "" + e
                 Toast.makeText(this,""+k,Toast.LENGTH_SHORT).show()
                 Log.d("info", "get failed with   "+k)
                 mStoragereference1 = FirebaseStorage.getInstance().reference
@@ -189,8 +190,8 @@ class ItemListPageAfterLoginUser : AppCompatActivity() {
                     mStoragereference1.getFile(file).addOnSuccessListener(OnSuccessListener<FileDownloadTask.TaskSnapshot?> {
                         var bitmap1 =
                             BitmapFactory.decodeFile(file.absolutePath)
-                        (findViewById<View>(R.id.profile_image) as ImageView).setImageBitmap(
-                            bitmap1)
+                        /*(findViewById<View>(R.id.profile_image) as ImageView).setImageBitmap(
+                            bitmap1)*/
                     }).addOnFailureListener( {
                         Toast.makeText(this,"failed",Toast.LENGTH_SHORT).show()
                     })

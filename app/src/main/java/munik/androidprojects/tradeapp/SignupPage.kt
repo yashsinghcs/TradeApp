@@ -128,7 +128,7 @@ class SignupPage : AppCompatActivity() {
                         userdetails["unique_id"] = auth.getCurrentUser()?.getUid().toString()
                         val documentReference: DocumentReference =
                             db.collection("STUDENT").document(userId_techer as String)
-
+                        Toast.makeText(baseContext,"testing" + documentReference.id,Toast.LENGTH_SHORT).show()
                         documentReference.set(userdetails)
                             .addOnSuccessListener { // Log.i("info", "on success:user  profile is created" + userId_techer);
                                 //. Log.i("info","on success:user  profile is created"+userId);
