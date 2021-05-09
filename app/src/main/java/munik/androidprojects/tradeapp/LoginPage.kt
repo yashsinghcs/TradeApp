@@ -18,6 +18,7 @@ class LoginPage : AppCompatActivity() {
     private lateinit var password: EditText
     private lateinit var login_phone : Button
     private lateinit var progressBar: ProgressBar
+    //the project at last
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_page)
